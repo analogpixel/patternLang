@@ -33,6 +33,8 @@ size( (10,10), (80,80) )
 unit("cm")
 name("test.svg")
 
-add( rect((0,0), (10,10)) ) 
+r = translate(20,0, rotate(45, rect(0,0, 10,10) ) )
+
+add( r)
 
 save()
