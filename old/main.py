@@ -29,12 +29,14 @@ if __name__ == '__main__':
     create_svg("test.svg")
 """
 
-size( (10,10), (80,80) )
+size( (100,100), (80,80) )
 unit("cm")
 name("test.svg")
 
-r = translate(20,0, rotate(45, rect(0,0, 10,10) ) )
-
-add( r)
+for i in range(0,360,15):
+    r = rect(0,0, 10,10)
+    r.rotate(i)
+    r.translate(0,30)
+    add( r)
 
 save()
