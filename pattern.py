@@ -122,7 +122,7 @@ class Polygon(Shape):
     def draw(self,dwg):
         # group.add( dwg.polygon( points= self.pts , fill=self.fillColor))
         e = dwg.polygon( points= self.pts , fill=self.fillColor)
-        e.rotate(self.r, (self.x, self.y))
+        e.rotate(self.r, (self.tx, self.ty))
         e.translate(self.tx, self.ty)
         return e
 
@@ -157,41 +157,25 @@ class Ellipse(Shape):
         self.h=h
         self.fillColor='red'
     def draw(self,dwg):
-        e =  dwg.ellipse( center=(self.pts[0][0], self.pts[0][1]), r=(self.w, self.h), fill=self.fillColor ) 
-        e.rotate(self.r, (self.pts[0][0], self.pts[0][1]))
+        e =  dwg.ellipse( center=(0,0), r=(self.w, self.h), fill=self.fillColor ) 
+        e.rotate(self.r, (self.tx, self.ty))
         e.translate(self.tx, self.ty)
         return e
 
 
 ## Copy an object into a grid
-def make_grid(group, startx, starty, boxSize, count):
+def make_grid(group, startx, starty, boxSize, countx, county=False):
+
+    if not county:
+        county = countx
+
     tmp = []
-    for x in range(0, count):
-        for y in range(0,count):
+    for x in range(0, countx):
+        for y in range(0,county):
             tmp_o = copy.deepcopy(group)
             tmp_o.set_name()
             tmp_o.translate( (startx + (x*boxSize))-(G_WIDTH/2) , (starty + (y*boxSize))-(G_HEIGHT/2) )
             tmp.append(tmp_o)
     return Group( *tmp )
 
-r = Renderer(G_WIDTH, G_HEIGHT)
 
-# DG:
-# E20,20 T10,0 Fblack RS4,
-# E15,15 T10,0 Fwhite RS4;
-
-g = Group(
-Group(Ellipse(20,20).translate(10,0).set('fillColor', 'black') ).radial_sym(4),
-Group(Ellipse(15,15).translate(10,0).set('fillColor','white') ).radial_sym(4),
-Group(Ellipse(8,4).translate(13,0).set('fillColor','black') ).radial_sym(4),
-Group(Ellipse(5,5).set('fillColor','red') )
-)
-
-gridg = make_grid(g, -200,-200, 60, 20)
-r.append( gridg)
-
-t = Group( rect(10, 10).rotate(45).set('fillColor', 'black') )
-t = make_grid( t, -200,-200, 30,35)
-r.append( t)
-
-r.render()
