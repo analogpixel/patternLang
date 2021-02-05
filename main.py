@@ -136,9 +136,9 @@ test1="bob = (E20,20 T90,0 RT45 C0)(RS10); RENDER(bob);"
 
 test2="""
 ga = ((E20,20 T10,0 C0 )(RS4), (E15,15 T10,0 C1 )(RS4), (E8,4 T13,0 C0)(RS4));
-mrgrid = GRID0,0,14,14,60,ga;
+mrgrid = GRID60,60,10,10,60,ga;
 gb = (R10,10 RT45 C0);
-tmp  = GRID30,30,14,14,60,gb;
+tmp  = GRID90,90,9,9,60,gb;
 RENDER(mrgrid, tmp);
 """
 
