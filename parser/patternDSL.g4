@@ -12,11 +12,11 @@ pgrm
     | grid
     ;
 
-group: VARNAME EQ RP groupdef (COMMA groupdef)* LP EOC;
+group: VARNAME EQ RP?? groupdef (COMMA groupdef)* LP?? EOC;
 
 groupdef: RP shpcmd shpopts* ('|' shpcmd shpopts*)* LP RP grpcmd* LP;
 
-grid: VARNAME EQ 'GRID' INT COMMA INT COMMA INT COMMA VARNAME EOC;
+grid: VARNAME EQ 'GRID' INT COMMA INT COMMA INT COMMA INT COMMA INT COMMA VARNAME EOC;
 
 render: 'RENDER' RP VARNAME (',' VARNAME)* LP EOC;
 
@@ -42,5 +42,5 @@ EQ: '=';
 RP: '(';
 LP: ')';
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
-INT: [0-9]+;
+INT: '-'*[0-9]+;
 VARNAME: [a-zA-Z][a-zA-Z]+;

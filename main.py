@@ -113,10 +113,14 @@ class createPatterns(patternDSLListener):
 
     def exitGrid(self,ctx):
         gridVar = ctx.getChild(0).getText() 
-        fromVar = ctx.getChild(9).getText()
-
-        print("create grid for var:", gridVar, " from var:", fromVar)
-        self.groupData[gridVar] = make_grid( self.groupData[fromVar], -200,200, 60,20)
+        startx = int(ctx.getChild(3).getText())
+        starty = int(ctx.getChild(5).getText())
+        xcount = int(ctx.getChild(7).getText())
+        ycount = int(ctx.getChild(9).getText())
+        boxsize =int(ctx.getChild(11).getText())
+        fromVar =ctx.getChild(13).getText()
+        print(gridVar, startx, starty, boxsize, xcount, ycount, fromVar)
+        self.groupData[gridVar] = make_grid( self.groupData[fromVar], startx,starty, boxsize, xcount, ycount)
     
     # used to add objects to the renderer
     def exitRender(self,ctx):
@@ -132,8 +136,10 @@ test1="bob = (E20,20 T90,0 RT45 C0)(RS10); RENDER(bob);"
 
 test2="""
 ga = ((E20,20 T10,0 C0 )(RS4), (E15,15 T10,0 C1 )(RS4), (E8,4 T13,0 C0)(RS4));
-mrgrid = GRID10,10,20,ga;
-RENDER(mrgrid);
+mrgrid = GRID0,0,14,14,60,ga;
+gb = (R10,10 RT45 C0);
+tmp  = GRID30,30,14,14,60,gb;
+RENDER(mrgrid, tmp);
 """
 
 def main():
